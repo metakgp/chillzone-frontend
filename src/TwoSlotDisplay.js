@@ -11,6 +11,14 @@ class TwoSlotDisplay extends Component {
     day = today.getDay() - 1;
     slot = HourSlotMap[today.getHours()];
 
+    if (slot === undefined) {
+      let hour = today.getHours();
+      slot = 0;
+      if (hour >= 18) {
+        day = (day + 1) % 9;
+      }
+    }
+
     this.state = this.Build(day, slot);
   }
 
@@ -26,8 +34,8 @@ class TwoSlotDisplay extends Component {
   }
 
   Build(day, slot) {
-    day = parseInt(day, 10)
-    slot = parseInt(slot, 10)
+    day = parseInt(day, 10) % 5
+    slot = parseInt(slot, 10) % 9
     return { day, slot }
   }
 
