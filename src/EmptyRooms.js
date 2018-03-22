@@ -12,7 +12,7 @@ class EmptyRooms extends Component {
   }
 
   static propTypes = {
-    schedule: PropTypes.object.isRequired,
+    schedule: PropTypes.array.isRequired,
     day: PropTypes.number.isRequired,
     slot: PropTypes.number.isRequired
   }
@@ -20,8 +20,6 @@ class EmptyRooms extends Component {
   render() {
 
     let day = this.props.day, slot = this.props.slot;
-
-    console.log("Day and slot: " + day + ', ' + slot)
 
     if(!(day >= 0 && day < 5 && slot >= 0 && slot < 9)) {
       return (

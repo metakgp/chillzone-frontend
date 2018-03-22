@@ -31,19 +31,19 @@ class TwoSlotDisplay extends Component {
     return { day, slot }
   }
 
-  static PropTypes = {
-    schedule: PropTypes.object.isRequired,
+  static propTypes = {
+    schedule: PropTypes.array.isRequired,
     date: PropTypes.object.isRequired
   }
 
   render() {
     return (
-      <div class="container">
+      <div className="container">
         <h3>
           Choose the slot that you want to chill at:
         </h3>
-        <div class="row">
-          <div class="col-md-12">
+        <div className="row">
+          <div className="col-md-12">
             <select value={this.state.day} onChange={(event) => {
               this.setState(this.Build(event.target.value, this.state.slot));
             }}>
@@ -64,13 +64,13 @@ class TwoSlotDisplay extends Component {
             </select>
           </div>
         </div>
-        <div class="row">
-          <div class="col-md-6">
+        <div className="row">
+          <div className="col-md-6">
             <EmptyRooms schedule={this.props.schedule}
                         day={this.state.day}
                         slot={this.state.slot} />
           </div>
-          <div class="col-md-6">
+          <div className="col-md-6">
             <EmptyRooms schedule={this.props.schedule}
                         day={this.getNextDay(this.state.day, this.state.slot)}
                         slot={this.getNextSlot(this.state.slot)} />

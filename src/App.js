@@ -6,9 +6,9 @@ import EmptyRoomsTable from './EmptyRoomsTable.js';
 import TwoSlotDisplay from './TwoSlotDisplay.js';
 
 class App extends Component {
-  static PropTypes = {
+  static propTypes = {
     schedule: PropTypes.object.isRequired,
-    empty_schedule: PropTypes.object.isRequired
+    empty_schedule: PropTypes.array.isRequired
   }
 
   render() {
