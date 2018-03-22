@@ -16,3 +16,15 @@ export const DayNames = [
   'Thursday',
   'Friday'
 ];
+export const HourSlotMap = {
+  8: 0,
+  9: 1,
+  10: 2,
+  11: 3,
+  12: 4,
+  13: 5,
+  14: 5,
+  15: 6,
+  16: 7,
+  17: 8,
+}

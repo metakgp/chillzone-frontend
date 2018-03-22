@@ -21,10 +21,12 @@ class EmptyRooms extends Component {
 
     let day = this.props.day, slot = this.props.slot;
 
+    console.log("Day and slot: " + day + ', ' + slot)
+
     if(!(day >= 0 && day < 5 && slot >= 0 && slot < 9)) {
       return (
         <h3>
-          That day/slot combination is invalid. 0 &lt;= Day &lt; 5 and 0 &lt;= Slot &lt; 9
+          That day/slot ({day}/{slot}) combination is invalid. 0 &lt;= Day &lt; 5 and 0 &lt;= Slot &lt; 9
         </h3>
       )
     }
@@ -56,3 +58,4 @@ class EmptyRooms extends Component {
 }
 
 export default EmptyRooms;
+
