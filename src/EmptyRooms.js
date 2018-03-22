@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import GenerateEmptyRoomsTR from './GenerateEmptyRoomsTR.js';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { DayNames, Slots } from './Constants.js';
+import chunk from 'lodash.chunk';
 
 class EmptyRooms extends Component {
   constructor() {
@@ -18,11 +18,38 @@ class EmptyRooms extends Component {
   }
 
   render() {
+
+    let day = this.props.day, slot = this.props.slot;
+
+    if(!(day >= 0 && day < 5 && slot >= 0 && slot < 9)) {
+      return (
+        <h3>
+          That day/slot combination is invalid. 0 &lt;= Day &lt; 5 and 0 &lt;= Slot &lt; 9
+        </h3>
+      )
+    }
+
+    let schedule = this.props.schedule[day][slot];
+    let schedule_chunked = chunk(schedule, 4);
+
     return (
       <div>
         <h3>
-          Empty Rooms at {this.DayNames[this.props.day]} from {this.Slots[this.props.slot]}
+          Empty Rooms on {this.DayNames[day]} from {this.Slots[slot]}
         </h3>
+        <Table striped bordered condensed hover>
+          <tbody>
+            {schedule_chunked.map((val) => (
+              <tr>
+                {val.map((room) => (
+                  <td>
+                    {room}
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </Table>
       </div>
    )
   }

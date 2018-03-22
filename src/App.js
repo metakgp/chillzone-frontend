@@ -19,8 +19,14 @@ class App extends Component {
           <h1>Chillzone - IIT Kharagpur</h1>
           <h3>Find a place to chill, NOW!</h3>
         </header>
-        <EmptyRooms schedule={this.props.empty_schedule} day={day} slot={slot} />
-        <EmptyRooms schedule={this.props.empty_schedule} day={day} slot={(slot + 1) % 9} />
+        <div class="row">
+          <div class="col-md-6">
+            <EmptyRooms schedule={this.props.empty_schedule} day={day} slot={slot} />
+          </div>
+          <div class="col-md-6">
+            <EmptyRooms schedule={this.props.empty_schedule} day={day} slot={(slot + 1) % 9} />
+          </div>
+        </div>
 
         <EmptyRoomsTable schedule={this.props.empty_schedule} />
           {Object.keys(this.props.schedule).map(key => {
