@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
 import { DayNames, Slots } from './Constants.js';
 import chunk from 'lodash.chunk';
+import intersection from 'lodash.intersection';
+import { getNextSlot, getPrevSlot } from './Utilities.js';
 
 class EmptyRooms extends Component {
   constructor() {
@@ -14,7 +16,9 @@ class EmptyRooms extends Component {
   static propTypes = {
     schedule: PropTypes.array.isRequired,
     day: PropTypes.number.isRequired,
-    slot: PropTypes.number.isRequired
+    slot: PropTypes.number.isRequired,
+    show_common_next: PropTypes.boolean,
+    show_common_prev: PropTypes.boolean,
   }
 
   render() {
@@ -32,6 +36,22 @@ class EmptyRooms extends Component {
     let schedule = this.props.schedule[day][slot];
     let schedule_chunked = chunk(schedule, 4);
 
+    let common_rooms = [ ]
+
+    if (this.props.show_common_next) {
+      let next = getNextSlot(day, slot)
+      let next_day = next.day;
+      let next_slot = next.slot;
+      common_rooms = intersection(this.props.schedule[day][slot], this.props.schedule[next_day][next_slot]);
+    }
+
+    if (this.props.show_common_prev) {
+      let prev = getPrevSlot(day, slot)
+      let prev_day = prev.day;
+      let prev_slot = prev.slot;
+      common_rooms = intersection(this.props.schedule[day][slot], this.props.schedule[prev_day][prev_slot]);
+    }
+
     return (
       <div>
         <h3>
@@ -41,11 +61,21 @@ class EmptyRooms extends Component {
           <tbody>
             {schedule_chunked.map((val) => (
               <tr>
-                {val.map((room) => (
-                  <td>
-                    {room}
-                  </td>
-                ))}
+                {val.map((room) => {
+                  let default_text = room;
+                  if (common_rooms.indexOf(room) >= 0) {
+                    default_text = (
+                      <b>
+                        {room}
+                      </b>
+                    );
+                  }
+                  return (
+                    <td>
+                      {default_text}
+                    </td>
+                  )
+                })}
               </tr>
             ))}
           </tbody>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import EmptyRooms from './EmptyRooms.js';
 import { HourSlotMap, Slots, DayNames } from './Constants.js';
+import { getNextSlot } from './Utilities.js';
 
 class TwoSlotDisplay extends Component {
   constructor(props) {
@@ -22,20 +23,7 @@ class TwoSlotDisplay extends Component {
     this.state = this.Build(day, slot);
   }
 
-  getNextDay(day, slot) {
-    day = parseInt(day, 10)
-    slot = parseInt(slot, 10)
-    return (day + Math.floor((slot + 1) / 9)) % 5;
-  }
-
-  getNextSlot(slot) {
-    slot = parseInt(slot, 10)
-    return (slot + 1) % 9;
-  }
-
   Build(day, slot) {
-    day = parseInt(day, 10) % 5
-    slot = parseInt(slot, 10) % 9
     return { day, slot }
   }
 
@@ -45,6 +33,8 @@ class TwoSlotDisplay extends Component {
   }
 
   render() {
+    let next = getNextSlot(this.state.day, this.state.slot);
+
     return (
       <div className="container">
         <h3>
@@ -53,7 +43,8 @@ class TwoSlotDisplay extends Component {
         <div className="row">
           <div className="col-md-12">
             <select value={this.state.day} onChange={(event) => {
-              this.setState(this.Build(event.target.value, this.state.slot));
+              let newDay = parseInt(event.target.value, 10)
+              this.setState(this.Build(newDay, this.state.slot));
             }}>
               {DayNames.map((val, ind) => (
                 <option value={ind}>
@@ -62,7 +53,8 @@ class TwoSlotDisplay extends Component {
               ))}
             </select>
             <select value={this.state.slot} onChange={(event) => {
-              this.setState(this.Build(this.state.day, event.target.value));
+              let newSlot = parseInt(event.target.value, 10);
+              this.setState(this.Build(this.state.day, newSlot));
             }}>
               {Slots.map((val, ind) => (
                 <option value={ind}>
@@ -73,20 +65,27 @@ class TwoSlotDisplay extends Component {
           </div>
         </div>
         <div className="row">
+          <div className="col-md-12">
+            <i>
+              Rooms in BOLD are free for the next slot as well
+            </i>
+          </div>
+        </div>
+        <div className="row">
           <div className="col-md-6">
             <EmptyRooms schedule={this.props.schedule}
                         day={this.state.day}
-                        slot={this.state.slot} />
+                        slot={this.state.slot}
+                        show_common_next={true} />
           </div>
           <div className="col-md-6">
             <EmptyRooms schedule={this.props.schedule}
-                        day={this.getNextDay(this.state.day, this.state.slot)}
-                        slot={this.getNextSlot(this.state.slot)} />
+                        day={next.day}
+                        slot={next.slot} />
           </div>
         </div>
       </div>
     )
-
   }
 }
 
