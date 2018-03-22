@@ -81,7 +81,8 @@ class TwoSlotDisplay extends Component {
           <div className="col-md-6">
             <EmptyRooms schedule={this.props.schedule}
                         day={next.day}
-                        slot={next.slot} />
+                        slot={next.slot}
+                        show_common_next={true} />
           </div>
         </div>
       </div>
