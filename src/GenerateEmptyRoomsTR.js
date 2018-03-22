@@ -1,16 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { DayNames } from './Constants.js'
 
 class GenerateCustomTR extends Component {
   constructor() {
     super()
-    this.DayNames = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday'
-    ];
+    this.DayNames = DayNames;
   }
 
   static PropTypes = {
