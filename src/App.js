@@ -4,6 +4,7 @@ import CustomTable from './CustomTable.js';
 import PropTypes from 'prop-types';
 import EmptyRoomsTable from './EmptyRoomsTable.js';
 import TwoSlotDisplay from './TwoSlotDisplay.js';
+import logo from './logo.png';
 
 class App extends Component {
   static propTypes = {
@@ -15,6 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
+          <img src={logo} alt="Logo" />
           <h1>Chillzone - IIT Kharagpur</h1>
           <h3>Find a place to chill, NOW!</h3>
         </header>
@@ -22,9 +24,9 @@ class App extends Component {
         <TwoSlotDisplay date={new Date()} schedule={this.props.empty_schedule} />
 
         <EmptyRoomsTable schedule={this.props.empty_schedule} />
-          {Object.keys(this.props.schedule).map(key => {
-            return <CustomTable room={key} schedule={this.props.schedule[key]} />
-          })}
+        {Object.keys(this.props.schedule).map(key => {
+          return <CustomTable room={key} schedule={this.props.schedule[key]} />
+        })}
       </div>
     );
   }
