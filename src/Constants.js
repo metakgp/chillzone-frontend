@@ -27,4 +27,10 @@ export const HourSlotMap = {
   15: 6,
   16: 7,
   17: 8,
+};
+export const Complexes = {
+  "Any": "",
+  "NC":"NC",
+  "NR":"NR",
+  "Vikramshila":"V"
 }
