@@ -37,7 +37,7 @@ class TwoSlotDisplay extends Component {
     return (
       <div className="container">
         <h3>
-          Choose the slot that you want to chill at:
+          Choose the slot, area and floor that you want to chill at:
         </h3>
         <div className="row">
           <div className="col-md-12">
