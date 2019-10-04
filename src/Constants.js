@@ -33,4 +33,5 @@ export const Complexes = {
   "NC":"NC",
   "NR":"NR",
   "Vikramshila":"V"
-}
+}; 
+export const Floors = [ 1, 2, 3, 4 ]
