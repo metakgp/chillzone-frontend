@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import { DayNames, Slots, Complexes } from './Constants.js';
+import { DayNames, Slots, Complexes, Floors } from './Constants.js';
 import chunk from 'lodash.chunk';
 import intersection from 'lodash.intersection';
 import { getNextSlot, getPrevSlot } from './Utilities.js';
@@ -25,7 +25,7 @@ class EmptyRooms extends Component {
 
   render() {
 
-    let day = this.props.day, slot = this.props.slot, complex = this.props.complex;
+    let day = this.props.day, slot = this.props.slot, complex = this.props.complex, floor = this.props.floor;
 
     if(!(day >= 0 && day < 5 && slot >= 0 && slot < 9)) {
       return (
@@ -36,9 +36,26 @@ class EmptyRooms extends Component {
     }
 
     let schedule = this.props.schedule[day][slot];
-    schedule = schedule.filter((item) => {
-      return item.includes(Complexes[complex])
+    let v_rooms = schedule.filter((item) => {
+      return item.includes("V")
     })
+    if(Complexes[complex] !== "V") {
+      schedule = schedule.filter((item) => {
+        if(Complexes[complex] === "" && Floors[floor] !== ""){
+          return item.charAt(2) === Floors[floor] && !item.includes("V")
+        } else if(Complexes[complex] !== "") {
+          return item.includes(Complexes[complex] + Floors[floor]) && !item.includes("V")
+        } else {
+          return !item.includes("V")
+        }
+      })
+      schedule = schedule.concat(v_rooms)
+    } else {
+      schedule = schedule.filter((item) => {
+        return item.includes(Complexes[complex])
+      })
+    }
+
     let schedule_chunked = chunk(schedule, 4);
 
     let common_rooms = [ ]
