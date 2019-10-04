@@ -39,20 +39,24 @@ class EmptyRooms extends Component {
     let v_rooms = schedule.filter((item) => {
       return item.includes("V")
     })
-    if(Complexes[complex] !== "V") {
+    if (Complexes[complex] === "V") {
       schedule = schedule.filter((item) => {
-        if(Complexes[complex] === "" && Floors[floor] !== ""){
-          return item.charAt(2) === Floors[floor] && !item.includes("V")
-        } else if(Complexes[complex] !== "") {
-          return item.includes(Complexes[complex] + Floors[floor]) && !item.includes("V")
-        } else {
-          return !item.includes("V")
-        }
+        return item.includes("V")
       })
+    } else if (Complexes[complex] === "") {
+      if(Floors[floor] !== ""){
+        schedule = schedule.filter((item) => {
+          return item.charAt(2) === Floors[floor] && !item.includes("V")
+        })
+      } else {
+        schedule = schedule.filter((item) => {
+          return !item.includes("V")
+        })
+      }
       schedule = schedule.concat(v_rooms)
     } else {
       schedule = schedule.filter((item) => {
-        return item.includes(Complexes[complex])
+        return item.includes(Complexes[complex] + Floors[floor]) && !item.includes("V")
       })
     }
 
