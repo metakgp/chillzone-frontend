@@ -9,7 +9,7 @@ class TwoSlotDisplay extends Component {
     super(props)
     let day = 0, slot = 0, today = props.date, complex = "Any", floor = "Any";
 
-    if (today.getDay() > 5) {
+    if (today.getDay() > 5 || today.getDay() == 0) {
       day = 0
     } else {
       day = today.getDay() - 1;
