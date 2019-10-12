@@ -12,6 +12,11 @@
   padding: 20px;
   color: white;
 }
+.App-header img {
+  height: 200px;
+  background: white;
+  fill: #222;
+}
 
 .App-title {
   font-size: 1.5em;
@@ -22,6 +27,10 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
