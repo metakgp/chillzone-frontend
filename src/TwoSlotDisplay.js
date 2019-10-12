@@ -7,14 +7,17 @@ import { getNextSlot } from './Utilities.js';
 class TwoSlotDisplay extends Component {
   constructor(props) {
     super(props)
-    let day = 0, slot = 0, today = props.date, complex = "Any", floor = "Any";
+    let day = 0 , slot = 0, today = props.date, complex = "Any", floor = "Any";
 
-    if (today.getDay() === 0 || today.getDay() === 6) {
-      day = 0
-    } else {
-      day = today.getDay() - 1;
-    }
+    day = today.getDay();
     slot = HourSlotMap[today.getHours()];
+
+    if (day === 0 || day === 6) {
+      day = 0;
+      slot = 0;
+    } else {
+      day -= 1
+    }
 
     if (slot === undefined) {
       let hour = today.getHours();
