@@ -12,7 +12,8 @@ class TwoSlotDisplay extends Component {
     day = today.getDay();
     slot = HourSlotMap[today.getHours()];
 
-    if (day === 0 || day === 6) {
+    let weekend = day === 0 || day === 6
+    if (weekend) {
       day = 0;
       slot = 0;
     } else {
@@ -41,11 +42,13 @@ class TwoSlotDisplay extends Component {
 
   render() {
     let next = getNextSlot(this.state.day, this.state.slot);
+    const weekend = this.state.day === 0 || this.state.day === 6;
     return (
       <div className="container">
         <h3>
           Choose the slot, area and floor that you want to chill at:
         </h3>
+        <h5>{ weekend &&  "PS: You shouldn't be attending classes on weekends! :P" }</h5>
         <div className="row">
           <div className="col-md-12">
             <select value={this.state.day} onChange={(event) => {
