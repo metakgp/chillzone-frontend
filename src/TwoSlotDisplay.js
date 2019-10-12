@@ -9,7 +9,11 @@ class TwoSlotDisplay extends Component {
     super(props)
     let day = 0, slot = 0, today = props.date, complex = "Any", floor = "Any";
 
-    day = today.getDay() - 1;
+    if (today.getDay() > 5) {
+      day = 0
+    } else {
+      day = today.getDay() - 1;
+    }
     slot = HourSlotMap[today.getHours()];
 
     if (slot === undefined) {
