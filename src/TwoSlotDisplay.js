@@ -7,9 +7,9 @@ import { getNextSlot } from './Utilities.js';
 class TwoSlotDisplay extends Component {
   constructor(props) {
     super(props)
-    let day = 0 , slot = 0, today = props.date, complex = "Any", floor = "Any";
+    let slot = 0, today = props.date, complex = "Any", floor = "Any";
 
-    day = today.getDay() - 1;
+    let day = today.getDay() - 1;
     let isWeekend = day < 0 || day >= 5;
     day = isWeekend ? 0 : day;
     slot = isWeekend ? 0 : HourSlotMap[today.getHours()];
@@ -36,7 +36,6 @@ class TwoSlotDisplay extends Component {
 
   render() {
     let next = getNextSlot(this.state.day, this.state.slot);
-    console.log(this.state)
     return (
       <div className="container">
         <h3>
