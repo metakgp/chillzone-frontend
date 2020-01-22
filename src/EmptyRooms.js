@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'react-bootstrap';
-import { DayNames, Slots } from './Constants.js';
+import { DayNames, Slots, Complexes, Floors } from './Constants.js';
 import chunk from 'lodash.chunk';
 import intersection from 'lodash.intersection';
 import { getNextSlot, getPrevSlot } from './Utilities.js';
@@ -11,19 +11,21 @@ class EmptyRooms extends Component {
     super()
     this.DayNames = DayNames;
     this.Slots = Slots;
+    this.Complexes = Complexes;
   }
 
   static propTypes = {
     schedule: PropTypes.array.isRequired,
     day: PropTypes.number.isRequired,
     slot: PropTypes.number.isRequired,
+    complex: PropTypes.string.isRequired,
     show_common_next: PropTypes.boolean,
     show_common_prev: PropTypes.boolean,
   }
 
   render() {
 
-    let day = this.props.day, slot = this.props.slot;
+    let day = this.props.day, slot = this.props.slot, complex = this.props.complex, floor = this.props.floor;
 
     if(!(day >= 0 && day < 5 && slot >= 0 && slot < 9)) {
       return (
@@ -34,6 +36,30 @@ class EmptyRooms extends Component {
     }
 
     let schedule = this.props.schedule[day][slot];
+    let v_rooms = schedule.filter((item) => {
+      return item.includes("V")
+    })
+    if (Complexes[complex] === "V") {
+      schedule = schedule.filter((item) => {
+        return item.includes("V")
+      })
+    } else if (Complexes[complex] === "") {
+      if(Floors[floor] !== ""){
+        schedule = schedule.filter((item) => {
+          return item.charAt(2) === Floors[floor] && !item.includes("V")
+        })
+      } else {
+        schedule = schedule.filter((item) => {
+          return !item.includes("V")
+        })
+      }
+      schedule = schedule.concat(v_rooms)
+    } else {
+      schedule = schedule.filter((item) => {
+        return item.includes(Complexes[complex] + Floors[floor]) && !item.includes("V")
+      })
+    }
+
     let schedule_chunked = chunk(schedule, 4);
 
     let common_rooms = [ ]

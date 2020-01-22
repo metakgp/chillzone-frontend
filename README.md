@@ -8,3 +8,7 @@ This is the frontend repository. Documentation is maintained at
 
 This repository can be deployed on heroku. To use the production build of React,
 use this buildpack URL: `https://github.com/mars/create-react-app-buildpack.git`
+
+## Deployment
+
+The `master` branch is auto-deployed using heroku at `chill.metakgp.org`
